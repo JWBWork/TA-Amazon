@@ -1,8 +1,8 @@
-from RPA.Email.ImapSmtp import ImapSmtp
 from src import BOT_DIR
-import json, os
+from RPA.Email.ImapSmtp import ImapSmtp
 from time import sleep
 import pandas as pd
+import json, os
 
 email_creds_path = os.path.join(BOT_DIR, 'creds', 'email-creds.json')
 with open(email_creds_path, 'r') as creds_file:
@@ -19,9 +19,11 @@ def send_results(cheapest_products):
         template = html_file.read()
         header, single_result_template = template.split('+')
     body = header
-    writer = pd.ExcelWriter(os.path.join(BOT_DIR, 'searchResults.xlsx'))
+    excel_path = os.path.join(BOT_DIR, 'searchResults.xlsx')
+    writer = pd.ExcelWriter(excel_path)
     results_df = pd.DataFrame(cheapest_products)
     results_df.to_excel(writer, 'SearchResults')
+    results_df.transpose()
     writer.save()
     for term, result in cheapest_products.items():
         result_html = single_result_template
@@ -34,9 +36,9 @@ def send_results(cheapest_products):
         mail.send_message(
             sender=creds['username'],
             recipients=creds['recipients'],
-            # cc=creds.get('cc', list()),
             body=body,
-            html=True
+            html=True,
+            attachments=excel_path
         )
         sleep(1)
     except Exception:

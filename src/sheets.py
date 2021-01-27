@@ -3,7 +3,6 @@ from src import BOT_DIR, CONFIG
 import os
 from pprint import pprint
 
-# Note: would replace with pygSheets - lets me pull in all values without pre-defined range
 sheets_cli = ServiceSheets()
 google_creds_path = os.path.join(
     BOT_DIR, 'creds', 'ta-google-creds.json'

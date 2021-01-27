@@ -1,6 +1,5 @@
 from src.amazon import search_shopping_list, close_driver
 from src.emailresults import send_results
-from pprint import pprint
 
 
 def main():

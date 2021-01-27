@@ -1,9 +1,8 @@
-from pprint import pprint
-import selenium.webdriver
-from src.sheets import get_shopping_list
-from selenium.common.exceptions import NoSuchElementException
-from src import BOT_DIR, CONFIG
 from src.logger import logger
+from src.sheets import get_shopping_list
+from src import BOT_DIR, CONFIG
+from selenium.common.exceptions import NoSuchElementException
+import selenium.webdriver
 import os, re
 
 cookie_path = os.path.join(BOT_DIR, 'cookies.pkl')
@@ -27,10 +26,10 @@ def parse_amzn_search_page(search_str):
     for div in result_divs:
         try:
             # Implemented to filter out items that don't really match - i.e. tvs of different sizes
+            # (Needs smarter implementation)
             name = div.find_element_by_css_selector('.a-link-normal.a-text-normal').get_attribute('innerText')
             split_search_str = [re.sub('[^a-zA-Z0-9 ]', '', s) for s in search_str.split(' ')]
             match_score = sum(1 for s in split_search_str if s.lower() in name.lower())/len(split_search_str)
-            # print(f'name: {name}\nsplit:{split_search_str}\nmatch_score:{match_score}\n')
             if match_score < CONFIG['settings']['match_threshold']:
                 continue
 
@@ -101,6 +100,6 @@ def close_driver():
 if __name__ == '__main__':
     try:
         results = search_shopping_list()
-        pprint(results)
+        print(results)
     finally:
         close_driver()
