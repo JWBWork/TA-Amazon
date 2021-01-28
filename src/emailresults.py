@@ -19,7 +19,7 @@ def send_results(cheapest_products):
         template = html_file.read()
         header, single_result_template = template.split('+')
     body = header
-    excel_path = os.path.join(BOT_DIR, 'searchResults.xlsx')
+    excel_path = os.path.join(BOT_DIR, 'output', 'searchResults.xlsx')
     writer = pd.ExcelWriter(excel_path)
     results_df = pd.DataFrame(cheapest_products)
     results_df.to_excel(writer, 'SearchResults')

@@ -1,0 +1,9 @@
+channels:
+   - defaults
+   - conda-forge
+
+dependencies:
+   - python=3.8.2
+   - pip=21.0
+   - pip
+      - -r requirements.txt
