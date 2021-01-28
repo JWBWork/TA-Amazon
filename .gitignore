@@ -215,3 +215,4 @@ cython_debug/
 /creds/email-creds.json
 /creds/ta-google-creds.json
 /src/geckodriver.log
+/searchResults.xlsx
