@@ -10,9 +10,8 @@ def main():
     amazon = Amazon(browser)
     emailer = Emailer(mail)
     try:
-        # search_terms = get_shopping_list()
-        search_terms = ['cat fighting toys']
-        cheapest = dict()
+        search_terms = get_shopping_list()
+        cheapest, results = dict(), []
         for term in search_terms:
             results = amazon.search(term)
             min_price = min(
@@ -21,7 +20,7 @@ def main():
             cheapest[term] = next(
                 r for r in results if r['total'] == min_price
             )
-        emailer.send_results(cheapest)
+        emailer.send_results(cheapest, results)
     finally:
         browser.close_browser()
 
