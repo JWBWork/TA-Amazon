@@ -216,3 +216,6 @@ cython_debug/
 /creds/ta-google-creds.json
 /src/geckodriver.log
 /searchResults.xlsx
+/output/logs/log.txt
+/output/searchResults.xlsx
+/src/playwright-log.txt

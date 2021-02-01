@@ -1,13 +1,14 @@
 """
 Module to define logging behavior with preferred logging library
 """
+from src import LOG_DIR
 from loguru import logger
 import logging
-import sys
-# from scrapy.utils.log import configure_logging
+import sys, os
 
 logger.remove()
 logger.add(sys.stderr, level="INFO")
+
 
 class InterceptHandler(logging.Handler):
 	def emit(self, record):
@@ -26,9 +27,8 @@ class InterceptHandler(logging.Handler):
 		logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
-# configure_logging(install_root_handler=False)
 logging.basicConfig(handlers=[InterceptHandler()], level=1)
-# logger.add('logs/log.txt', rotation='5 MB')
+logger.add(os.path.join(LOG_DIR,'log.txt'), rotation='5 MB')
 
 from selenium.webdriver.remote.remote_connection import LOGGER as selenium_logger
 selenium_logger.setLevel(logging.WARNING)
